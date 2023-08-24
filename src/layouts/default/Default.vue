@@ -1,12 +1,7 @@
 <template>
-  <v-app>
-    <default-bar />
-
-    <default-view />
-  </v-app>
+  <hello-world></hello-world>
 </template>
 
 <script setup>
-  import DefaultBar from './AppBar.vue'
-  import DefaultView from './View.vue'
+  import HelloWorld from '@/components/HelloWorld.vue';
 </script>

@@ -178,6 +178,13 @@
   resolved "https://registry.yarnpkg.com/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.4.15.tgz#d7c6e6755c78567a951e04ab52ef0fd26de59f32"
   integrity sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==
 
+"@map-component/vue-tmap@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@map-component/vue-tmap/-/vue-tmap-1.0.1.tgz#02f0ecab279179835e180b4d48f7b3cd3168f21d"
+  integrity sha512-XzbngdnJozJlk/a+d3vGSRbsfoHStGcAQRL0wOLbUJ3O3AR0AqvSEhaYCGbBVZ/N2z5c3/Dth/CqCl57YNGWwg==
+  dependencies:
+    core-js "^3.22.4"
+
 "@mdi/font@7.0.96":
   version "7.0.96"
   resolved "https://registry.yarnpkg.com/@mdi/font/-/font-7.0.96.tgz#9853c222623072f5575b4039c8c195ea929b61fc"
@@ -437,7 +444,7 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
-core-js@^3.29.0:
+core-js@^3.22.4, core-js@^3.29.0:
   version "3.32.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.32.1.tgz#a7d8736a3ed9dd05940c3c4ff32c591bb735be77"
   integrity sha512-lqufgNn9NLnESg5mQeYsxQP5w7wrViSj0jr/kv6ECQiByzQkrn1MKvV0L3acttpDqfQrHLwr2KCMgX5b8X+lyQ==
