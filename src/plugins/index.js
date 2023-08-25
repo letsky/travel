@@ -6,17 +6,28 @@
 
 // Plugins
 import { loadFonts } from './webfontloader'
-import vuetify from './vuetify'
 import router from '../router'
 import Tmap from '@map-component/vue-tmap';
-import '@mdi/font/css/materialdesignicons.css'
+
+// Toast
+import { showToast } from 'vant';
+import 'vant/es/toast/style';
+
+// Dialog
+import { showDialog } from 'vant';
+import 'vant/es/dialog/style';
+
+// Notify
+import { showNotify } from 'vant';
+import 'vant/es/notify/style';
+
+// ImagePreview
+import { showImagePreview } from 'vant';
+import 'vant/es/image-preview/style';
 
 export function registerPlugins (app) {
   loadFonts()
   app
-    .use(vuetify, {
-      iconfont: 'mdi'
-    })
     .use(router)
     .use(Tmap)
     .use()

@@ -1,31 +1,22 @@
 <template>
-  <v-container>
-    <div class="map-box">
-      <tmap-map mapKey="6PTBZ-MCAW5-6ZHIM-Q6IT2-PDKMF-73FXO" :events="events" :center="center" :zoom="zoom"
-        :doubleClickZoom="doubleClickZoom" :control="control">
+  <tmap-map mapKey="6PTBZ-MCAW5-6ZHIM-Q6IT2-PDKMF-73FXO" :events="events" :center="center" :zoom="zoom"
+    :doubleClickZoom="doubleClickZoom" :control="control" :draggable="draggable" >
 
-        <tmap-multi-marker :styles="markerStyles" :geometries="markerGeometries" ref="markers" @click="print"
-          @dblclick="print" />
-      </tmap-map>
-    </div>
+    <tmap-multi-marker :styles="markerStyles" :geometries="markerGeometries" ref="markers" @click="print"
+      @dblclick="print" />
+  </tmap-map>
+  <van-floating-panel style="z-index: 999;" :height="height" :anchors="anchors" contentDraggable @dragstart="dragstart" @click.prevent="preventClick" @click="print">
+    <van-cell-group inset>
+      <van-cell v-for="(item, idx) in items" :key="item.id" :title="item.name" size="large" :label="item.position"
+        icon="location" clickable @click="move(item.position)">
+        <template #right-icon>
+          <van-icon name="guide-o" class="navigation-icon" />
+        </template>
 
-    <v-card class="mx-auto">
-      <v-list>
-        <v-list-item v-for="(item, idx) in items" :key="item.id" :title="item.name" :subtitle="item.date"
-          :value="item.position" @click="move(item.position)">
-          <template v-slot:prepend>
-            <v-icon icon="mdi-flag"></v-icon>
-          </template>
-        </v-list-item>
-      </v-list>
+      </van-cell>
+    </van-cell-group>
+  </van-floating-panel>
 
-      <v-card-text style="height: 100px; position: relative">
-        <v-btn absolute dark fab top right icon color="pink">
-          <v-icon icon="mdi-magnify"></v-icon>
-        </v-btn>
-      </v-card-text>
-    </v-card>
-  </v-container>
 </template>
 
 <script setup>
@@ -33,7 +24,8 @@ import { ref } from 'vue';
 
 const center = ref({ lat: 39.984104, lng: 116.307503 });
 const zoom = ref(13);
-const doubleClickZoom = ref(true);
+const doubleClickZoom = ref(false);
+const draggable = ref(true)
 const print = (e) => {
   console.log(e);
 };
@@ -41,7 +33,7 @@ const print = (e) => {
 const control = ref({
   scale: {},
   zoom: {
-    position: 'bottomRight',
+    position: 'topRight',
   },
 });
 
@@ -69,6 +61,18 @@ const markerGeometries = ref([
 const items = ref([
   { id: 1, name: "清华大学", date: "2023-10-01 09:00", position: { lat: 39.98481500648338, lng: 116.30571126937866 } },
   { id: 2, name: "中关村", date: "2023-10-01 13:00", position: { lat: 39.978813710266024, lng: 116.31699800491333 } },
+  { id: 1, name: "清华大学", date: "2023-10-01 09:00", position: { lat: 39.98481500648338, lng: 116.30571126937866 } },
+  { id: 2, name: "中关村", date: "2023-10-01 13:00", position: { lat: 39.978813710266024, lng: 116.31699800491333 } },
+  { id: 1, name: "清华大学", date: "2023-10-01 09:00", position: { lat: 39.98481500648338, lng: 116.30571126937866 } },
+  { id: 2, name: "中关村", date: "2023-10-01 13:00", position: { lat: 39.978813710266024, lng: 116.31699800491333 } },
+  { id: 1, name: "清华大学", date: "2023-10-01 09:00", position: { lat: 39.98481500648338, lng: 116.30571126937866 } },
+  { id: 2, name: "中关村", date: "2023-10-01 13:00", position: { lat: 39.978813710266024, lng: 116.31699800491333 } },
+  { id: 1, name: "清华大学", date: "2023-10-01 09:00", position: { lat: 39.98481500648338, lng: 116.30571126937866 } },
+  { id: 2, name: "中关村", date: "2023-10-01 13:00", position: { lat: 39.978813710266024, lng: 116.31699800491333 } },
+  { id: 1, name: "清华大学", date: "2023-10-01 09:00", position: { lat: 39.98481500648338, lng: 116.30571126937866 } },
+  { id: 2, name: "中关村", date: "2023-10-01 13:00", position: { lat: 39.978813710266024, lng: 116.31699800491333 } },
+  { id: 1, name: "清华大学", date: "2023-10-01 09:00", position: { lat: 39.98481500648338, lng: 116.30571126937866 } },
+  { id: 2, name: "中关村", date: "2023-10-01 13:00", position: { lat: 39.978813710266024, lng: 116.31699800491333 } },
 ])
 
 const markerStyles = ref({
@@ -86,16 +90,21 @@ const markerStyles = ref({
   },
 })
 
-const onPositionClick = (e) => {
-  console.log(e)
-  const position = e.target
-  move(position)
-}
+const anchors = [
+  200,
+  Math.round(0.4 * window.innerHeight),
+  Math.round(0.7 * window.innerHeight),
+];
+const height = ref(anchors[0]);
 
+const dragstart = (e) => console.log("drag", e)
+const preventClick = (e) => e.stopPropagation()
 </script>
 
 <style scoped>
-.map-box {
-  height: 300px;
+.navigation-icon {
+  font-size: 16px;
+  line-height: inherit;
+  vertical-align: middle;
 }
 </style>
