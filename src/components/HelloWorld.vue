@@ -8,6 +8,7 @@
           @dblclick="print" />
       </tmap-map>
     </div>
+
     <v-card class="mx-auto">
       <v-list>
         <v-list-item v-for="(item, idx) in items" :key="item.id" :title="item.name" :subtitle="item.date"
@@ -17,6 +18,12 @@
           </template>
         </v-list-item>
       </v-list>
+
+      <v-card-text style="height: 100px; position: relative">
+        <v-btn absolute dark fab top right icon color="pink">
+          <v-icon icon="mdi-magnify"></v-icon>
+        </v-btn>
+      </v-card-text>
     </v-card>
   </v-container>
 </template>

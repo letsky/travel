@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@map-component/vue-tmap": "^1.0.1",
-    "@mdi/font": "7.0.96",
+    "@mdi/font": "^7.2.96",
     "core-js": "^3.29.0",
     "roboto-fontface": "*",
     "vue": "^3.2.0",
