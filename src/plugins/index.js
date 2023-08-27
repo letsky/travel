@@ -8,6 +8,7 @@
 import { loadFonts } from './webfontloader'
 import router from '../router'
 import Tmap from '@map-component/vue-tmap';
+import '@vant/touch-emulator';
 
 // Toast
 import { showToast } from 'vant';
