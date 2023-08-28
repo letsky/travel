@@ -1,5 +1,5 @@
 <template>
-  <tmap-map mapKey="6PTBZ-MCAW5-6ZHIM-Q6IT2-PDKMF-73FXO" ref="tmap" :events="events" :center="center" :zoom="zoom"
+  <tmap-map :mapKey="mapKey" ref="tmap" :events="events" :center="center" :zoom="zoom"
     :doubleClickZoom="doubleClickZoom" :control="control" :draggable="draggable" :libraries="libraries">
 
     <tmap-multi-marker :styles="markerStyles" :geometries="markerGeometries" ref="markers" @click="print"
@@ -25,7 +25,7 @@
 
 <script setup>
 import { ref } from 'vue';
-const tmap = ref(null)
+const mapKey = ref(import.meta.env.VITE_MAP_KEY)
 
 const center = ref({ lat: 39.984104, lng: 116.307503 });
 const zoom = ref(13);
