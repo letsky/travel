@@ -6,6 +6,10 @@ const routes = [
     path: '/',
     component: () => import('@/layouts/index/Index.vue')
   },
+  {
+    path: '/preview/:groupId',
+    component: () => import('@/layouts/preview/Index.vue')
+  }
 ]
 
 const router = createRouter({
