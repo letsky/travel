@@ -7,8 +7,12 @@ const routes = [
     component: () => import('@/layouts/index/Index.vue')
   },
   {
-    path: '/preview/:groupId',
-    component: () => import('@/layouts/preview/Index.vue')
+    path: '/group/:groupId',
+    component: () => import('@/layouts/group/Index.vue')
+  },
+  {
+    path: '/group/:groupId/preview',
+    component: () => import('@/layouts/group/Preview.vue')
   }
 ]
 

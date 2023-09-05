@@ -13,14 +13,38 @@
       </van-cell>
       <van-cell v-for="(item, idx) in suggestions" :key="item.id" :title="item.title" :label="item.address" size="large"
         icon="location" clickable @click="onPoiClick(item.id)">
-        <template #right-icon>
-          <van-icon name="guide-o" class="navigation-icon" />
-        </template>
-
+          <template #right-icon>
+            <van-icon name="add-o" size="28" @click="onAddClick(item)" />
+          </template>
       </van-cell>
     </van-cell-group>
   </van-floating-panel>
+  
+  <van-dialog v-model:show="showDialog" title="添加地点" showCancelButton confirmButtonText="添加" :open="onDialogOpen"
+      :close="onDialogClose">
+      <van-form @submit="onSubmit">
+        <van-cell-group inset>
+          <van-field v-model="formData.title" name="地点" label="地点" placeholder="地点"
+            :rules="[{ required: true, message: '请填写地点' }]" disabled />
 
+          <van-field v-model="formData.date" is-link readonly name="datePicker" label="日期" placeholder="点击选择日期"
+            @click="showDatePicker = true" />
+          <van-field v-model="formData.time" is-link readonly name="timePicker" label="时间" placeholder="点击选择时间"
+            @click="showTimePicker = true" />
+          <!-- date -->
+          <van-popup v-model:show="showDatePicker" position="bottom">
+            <van-date-picker @confirm="onDateConfirm" @cancel="showDatePicker = false" />
+          </van-popup>
+          <!-- time -->
+          <van-popup v-model:show="showTimePicker" position="bottom">
+            <van-time-picker @confirm="onTimeConfirm" @cancel="showTimePicker = false" />
+          </van-popup>
+        </van-cell-group>
+        <van-button round block type="primary" native-type="submit">
+          提交
+        </van-button>
+      </van-form>
+    </van-dialog>
 </template>
 
 <script setup>
@@ -34,6 +58,10 @@ const draggable = ref(true)
 const searchKeyword = ref('');
 
 const libraries = ref(['service'])
+const showDialog = ref(false);
+const showDatePicker = ref(false);
+const showTimePicker = ref(false);
+const formData = ref({})
 const print = (e) => {
   console.log(e);
 };
@@ -167,6 +195,30 @@ const onPoiClick = (poiId) => {
       move(position)
     }
   })
+}
+
+const onAddClick = (item) => {
+  console.log("add", item)
+  showDialog.value = true
+  formData.value = { id: item.id, title: item.title, position: item.position }
+  console.log(formData.value)
+}
+
+const onDialogOpen = () => {
+  console.log(item)
+
+}
+
+const onDialogClose = () => {
+  formData.value = {}
+}
+
+const onSubmit = () => {
+  console.log("submit")
+}
+
+const onDateConfirm = () => {
+
 }
 
 </script>
