@@ -21,34 +21,33 @@
   </van-floating-panel>
   
   <van-dialog v-model:show="showDialog" title="添加地点" showCancelButton confirmButtonText="添加" :open="onDialogOpen"
-      :close="onDialogClose">
-      <van-form @submit="onSubmit">
+      @close="onDialogClose" @confirm="onDialogConfirm">
+      <van-form>
         <van-cell-group inset>
           <van-field v-model="formData.title" name="地点" label="地点" placeholder="地点"
             :rules="[{ required: true, message: '请填写地点' }]" disabled />
 
-          <van-field v-model="formData.date" is-link readonly name="datePicker" label="日期" placeholder="点击选择日期"
+          <van-field v-model="dateString" is-link readonly name="datePicker" label="日期" placeholder="点击选择日期"
             @click="showDatePicker = true" />
-          <van-field v-model="formData.time" is-link readonly name="timePicker" label="时间" placeholder="点击选择时间"
+          <van-field v-model="timeString" is-link readonly name="timePicker" label="时间" placeholder="点击选择时间"
             @click="showTimePicker = true" />
           <!-- date -->
           <van-popup v-model:show="showDatePicker" position="bottom">
-            <van-date-picker @confirm="onDateConfirm" @cancel="showDatePicker = false" />
+            <van-date-picker v-model="selectedDate" @confirm="onDateConfirm" @cancel="showDatePicker = false" />
           </van-popup>
           <!-- time -->
           <van-popup v-model:show="showTimePicker" position="bottom">
-            <van-time-picker @confirm="onTimeConfirm" @cancel="showTimePicker = false" />
+            <van-time-picker v-model="selectedTime" @confirm="onTimeConfirm" @cancel="showTimePicker = false" />
           </van-popup>
         </van-cell-group>
-        <van-button round block type="primary" native-type="submit">
-          提交
-        </van-button>
       </van-form>
     </van-dialog>
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import { ref } from 'vue';
+import  {setLocaltion, getAllLocaltion}  from "../../plugins/database"
 const mapKey = ref(import.meta.env.VITE_MAP_KEY)
 
 const center = ref({ lat: 39.984104, lng: 116.307503 });
@@ -83,9 +82,12 @@ const search = (keyword) => {
   }).then(res => print(res))
 }
 
-const dblclickSearch = (e) => {
-  search('云台小区')
+const getRecentLocation = () => {
+  const data = getAllLocaltion() || []
+  suggestions.value = data
 }
+
+
 
 const events = ref({
   dblclick: print,
@@ -138,6 +140,7 @@ const onSearchSubmit = () => {
 }
 
 const suggestions = ref([])
+getRecentLocation()
 
 const clearSearchState = () => {
   searchKeyword.value = ""
@@ -200,27 +203,58 @@ const onPoiClick = (poiId) => {
 const onAddClick = (item) => {
   console.log("add", item)
   showDialog.value = true
-  formData.value = { id: item.id, title: item.title, position: item.position }
-  console.log(formData.value)
+  formData.value = { id: item.id, title: item.title, position: item.location }
 }
 
+
+
+const selectedDate = ref([])
+const selectedTime = ref([])
+
+const onDateConfirm = () => {
+  formData.value.date = selectedDate.value
+  showDatePicker.value = false
+}
+
+const onTimeConfirm = () => {
+  formData.value.time = selectedTime.value
+  showTimePicker.value = false
+}
+
+const dateString = computed(() => {
+  const dateArray = formData.value.date
+  if (dateArray === undefined) {
+    return ""
+  }
+  return dateArray.join("-")
+})
+
+const timeString = computed(() => {
+  const timeArray = formData.value.time
+  if (timeArray === undefined) {
+    return ""
+  }
+  return timeArray.join(":")
+})
+
 const onDialogOpen = () => {
-  console.log(item)
+  console.log("open dialog")
 
 }
 
 const onDialogClose = () => {
   formData.value = {}
+  console.log("close")
 }
 
-const onSubmit = () => {
-  console.log("submit")
+const onDialogConfirm = () => {
+  console.log("confirm")
+  console.log(formData.value)
+  
+  //get uuid
+  const uuid = self.crypto.randomUUID()
+  setLocaltion(uuid, formData.value)
 }
-
-const onDateConfirm = () => {
-
-}
-
 </script>
 
 <style scoped>
